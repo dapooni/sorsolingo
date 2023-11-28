@@ -570,9 +570,21 @@ WindowManager:
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
 
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint: .82, .05
+                pos_hint: {"center_x": .5, "center_y": .79}
+                Spinner:
+                    id: spinner_id
+                    text: "Translate to..."
+                    values: ["Bisakol", "Tagalog", "English"]
+                    #on_text: root.spinner_clicked(spinner_id.text)
+                    background_normal: ''
+                    background_color: 1, 0.83, 0.58, 1
+
             MDFloatLayout:
                 size_hint: .85, .055
-                pos_hint: {"center_x": .5, "center_y": .8}
+                pos_hint: {"center_x": .5, "center_y": .7}
                 canvas:
                     Color:
                         rgb: rgba(157, 147, 128, 0)
@@ -597,21 +609,13 @@ WindowManager:
                     pos_hint: {"center_x": 0.88, "center_y": 0.5}
                     on_release: root.start_voice_input()
 
-            MDLabel:
-                text: "Translate to..."
-                font_size: 20
-                font_name: "fonts/RobotoCondensed-Regular.ttf"
-                pos_hint: {"center_x": .5, "center_y": .72}
-                halign: "center"
-                color: '000000'
-
             MDBoxLayout:
                 orientation: "vertical"
                 size_hint: .82, .05
-                pos_hint: {"center_x": .5, "center_y": .67}
+                pos_hint: {"center_x": .5, "center_y": .61}
                 Spinner:
-                    id: spinner_id
-                    text: "Choose Dialect"
+                    id: spinner_id2
+                    text: "Translate to..."
                     values: ["Bisakol", "Tagalog", "English"]
                     #on_text: root.spinner_clicked(spinner_id.text)
                     background_normal: ''
@@ -619,8 +623,8 @@ WindowManager:
 
             MDBoxLayout:
                 orientation: 'vertical'
-                size_hint: 0.85, 0.4
-                pos_hint: {"center_x": .5, "center_y": .43}
+                size_hint: 0.85, 0.3
+                pos_hint: {"center_x": .5, "center_y": .38}
                 canvas.before:
                     Color:
                         rgb: rgba(231, 209, 168, 0)
@@ -628,6 +632,10 @@ WindowManager:
                         size: self.size
                         pos: self.pos
                         radius: [10, 10, 10, 10]
+                MDIconButton:
+                    icon: "assets/speaker.png"
+                    pos_hint: {"center_x": 0.9, "center_y": 0.5}
+                    # on_release: root.start_voice_output()
 
             MDFloatLayout:
                 Button:
