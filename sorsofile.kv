@@ -576,9 +576,9 @@ WindowManager:
                 pos_hint: {"center_x": .5, "center_y": .79}
                 Spinner:
                     id: spinner_id
-                    text: "Translate to..."
+                    text: "Translate from..."
                     values: ["Bisakol", "Tagalog", "English"]
-                    #on_text: root.spinner_clicked(spinner_id.text)
+                    on_text: root.spinner_clicked(spinner_id.text)
                     background_normal: ''
                     background_color: 1, 0.83, 0.58, 1
 
@@ -593,7 +593,7 @@ WindowManager:
                         pos: self.pos
                         radius: [20]
                 TextInput:
-                    id: search_input
+                    id: translate_input
                     hint_text: "Type here..."
                     hint_text_color: 0, 0, 0, 1
                     size_hint: 1, None
@@ -617,7 +617,7 @@ WindowManager:
                     id: spinner_id2
                     text: "Translate to..."
                     values: ["Bisakol", "Tagalog", "English"]
-                    #on_text: root.spinner_clicked(spinner_id.text)
+                    on_text: root.spinner_clicked(spinner_id2.text)
                     background_normal: ''
                     background_color: 1, 0.83, 0.58, 1
 
@@ -632,6 +632,18 @@ WindowManager:
                         size: self.size
                         pos: self.pos
                         radius: [10, 10, 10, 10]
+                TextInput:
+                    id: translate_output
+                    hint_text: "Translation"
+                    hint_text_color: 0, 0, 0, 1
+                    size_hint: 1, None
+                    pos_hint: {"left_x": .5, "left_y": .0}
+                    height: self.minimum_height
+                    background_color: 0, 0, 0, 0
+                    padding: 40
+                    font_name: "fonts/RobotoCondensed-Regular.ttf"
+                    font_size: 20
+                    multiline: False 
                 MDIconButton:
                     icon: "assets/speaker.png"
                     pos_hint: {"center_x": 0.9, "center_y": 0.5}
