@@ -9,6 +9,7 @@ from kivy.uix.label import Label
 from kivy.metrics import dp
 
 from kivy.animation import Animation
+from transformers import pipeline
 
 
 Window.size = (360, 740)
@@ -78,9 +79,24 @@ class HistoryScreen(Screen):
 
 
 class DictionaryScreen(Screen):
-    # def spinner_clicked(self, value): for translating
-
-
+    def spinner_clicked(self, value):
+        input = self.ids.spinner_id.text
+        if input=="English" and value=="Bisakol":
+            pipe = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-en-bsl")
+            translation = pipe(self.ids.translate_input.text)[0]["generated_text"]
+            self.ids.translate_output.text = f'{translation}'
+        elif input=="Bisakol" and value=="English":
+            pipe = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-bsl-en")
+            translation = pipe(self.ids.translate_input.text)[0]["generated_text"]
+            self.ids.translate_output.text = f'{translation}'
+        elif input=="Tagalog" and value=="Bisakol":
+            pipe = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-tl-bsl")
+            translation = pipe(self.ids.translate_input.text)[0]["generated_text"]
+            self.ids.translate_output.text = f'{translation}'
+        elif input=="Bisakol" and value=="Tagalog":
+            pipe = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-bsl-tl")
+            translation = pipe(self.ids.translate_input.text)[0]["generated_text"]
+            self.ids.translate_output.text = f'{translation}'
     def update_search_history(self, search_text):
         # Limit the search history to a certain number of entries (e.g., 10)
         max_history_entries = 10
