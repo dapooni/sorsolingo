@@ -1,0 +1,1190 @@
+WindowManager:
+    Start:
+    Login:
+    Forgot:
+    SignUp:
+    MainWindow:
+    DictionaryScreen:
+    HistoryScreen:
+    Profile:
+    EditProfile:
+    About:
+    Help:
+    Logout:
+
+<Start>:
+    name: "start"
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+            MDLabel:
+                text: "sorsolingo."
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 40
+                pos_hint: {"center_x": .73, "center_y": .8}
+                color: '90691C'
+
+            Image:
+                source: "assets/Sorsolingo.png"
+                pos_hint: {"center_x": .50, "center_y": .60}
+                size_hint: .83, .83
+
+            MDLabel:
+                text: "A Bicol dialect Machine Translator"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 25
+                pos_hint: {"center_x": .5, "center_y": .43}
+                halign: "center"
+                color: '6D5F5F'
+
+            MDFillRoundFlatIconButton:
+                icon: "assets/email.png"
+                text: "    LOGIN WITH EMAIL"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                bold: True
+                md_bg_color: 117 / 255, 93 / 255, 47 / 255, 1
+                size_hint: .85, .08
+                pos_hint: {"center_x": .5, "center_y": .30}
+                icon_size: "30sp"
+                icon_colored: True
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "login"
+
+            Button:
+                text: "Didn't have an account? [color=000000][b]Sign Up[/b][/color]."
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                color: '6D5F5F'
+                markup: True
+                background_color: 0, 0, 0, 0
+                size_hint: .8, .065
+                pos_hint: {"center_x": .5, "center_y": .225}
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "signup"
+
+<Login>:
+    name: "login"
+    email: email_box
+    password: pass_box
+
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDIconButton:
+                icon: "assets/arrow.png"
+                pos_hint: {"center_y": .93}
+                size_hint: None, None
+                user_font_size: "30sp"
+                text_color: rgba(26, 24, 58, 255)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "start"
+                    root.email.text = ""
+                    root.password.text = ""
+
+            MDLabel:
+                text: "sorsolingo."
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 36
+                halign: "center"
+                pos_hint: {"center_x": .5, "center_y": .85}
+                color: '90691C'
+
+            MDLabel:
+                text: "Log in on Sorsolingo :)"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 20
+                pos_hint: {"center_x": .5, "center_y": .8}
+                halign: "center"
+                color: '6D5F5F'
+
+            Image:
+                source: "assets/Sorsolingo2.png"
+                pos_hint: {"center_x": .50, "center_y": .6}
+                size_hint: .60, .60
+
+            MDFloatLayout:
+                size_hint: .85, .08
+                pos_hint: {"center_x": .5, "center_y": .39}
+                canvas:
+                    Color:
+                        rgb: rgba(216, 201, 173, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+                TextInput:
+                    hint_text: "Email"
+                    id: email_box
+                    size_hint: 1, None
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    height: self.minimum_height
+                    background_color: 0, 0, 0, 0
+                    padding: 70
+                    font_name: "fonts/RobotoCondensed-Regular.ttf"
+                    font_size: 18
+                    multiline: False
+                    email: True
+                Image:
+                    source: "assets/email.png"
+                    size_hint: None, None
+                    size: 30, 30
+                    pos_hint: {"center_x": .1, "center_y": .5}
+
+            MDFloatLayout:
+                size_hint: .85, .08
+                pos_hint: {"center_x": .5, "center_y": .30}
+                canvas:
+                    Color:
+                        rgba: 216/255, 201/255, 173/255, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+                TextInput:
+                    hint_text: "Password"
+                    id: pass_box
+                    size_hint: 1, None
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    height: self.minimum_height
+                    background_color: 0, 0, 0, 0
+                    padding: 70
+                    font_name: "fonts/RobotoCondensed-Regular.ttf"
+                    font_size: 18
+                    multiline: False
+                    password: True
+                Image:
+                    source: "assets/key.png"
+                    size_hint: None, None
+                    size: 30, 30
+                    pos_hint: {"center_x": .1, "center_y": .5}
+                MDIconButton:
+                    icon: "eye-off"
+                    pos_hint: {"center_y": .5}
+                    pos: pass_box.width - self.width + dp(8), 0
+                    theme_text_color: "Hint"
+                    on_release:
+                        self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                        pass_box.password = False if pass_box.password else True
+
+            MDFillRoundFlatButton:
+                text: "LOGIN WITH EMAIL"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                bold: True
+                md_bg_color: 117 / 255, 93 / 255, 47 / 255, 1
+                size_hint: .85, .08
+                pos_hint: {"center_x": .5, "center_y": .21}
+                on_release: root.identify()
+
+            Button:
+                text: "Forgot password? [color=000000][b]Click here[/b][/color]."
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                color: '6D5F5F'
+                markup: True
+                background_color: 0, 0, 0, 0
+                size_hint: .5, .065
+                pos_hint: {"center_x": .5, "center_y": .14}
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "forgot"
+
+<Forgot>:
+    name: "forgot"
+    email: email_box
+
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDIconButton:
+                icon: "assets/arrow.png"
+                pos_hint: {"center_y": .93}
+                size_hint: None, None
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: rgba(26, 24, 58, 255)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "login"
+                    root.email.text = ""
+
+            MDLabel:
+                text: "sorsolingo."
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 36
+                halign: "center"
+                pos_hint: {"center_x": .5, "center_y": .85}
+                color: '90691C'
+
+            MDLabel:
+                text: "Forget Password on Sorsolingo?"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 20
+                pos_hint: {"center_x": .5, "center_y": .8}
+                halign: "center"
+                color: '6D5F5F'
+
+            Image:
+                source: "assets/Sorsolingo2.png"
+                pos_hint: {"center_x": .5, "center_y": .62}
+                size_hint: .59, .59
+
+            MDLabel:
+                text: "Confirm your email address and we'll                                                                             send the instruction"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .5, "center_y": .42}
+                halign: "center"
+                color: '6D5F5F'
+
+            MDFloatLayout:
+                size_hint: .85, .08
+                pos_hint: {"center_x": .5, "center_y": .32}
+                canvas:
+                    Color:
+                        rgb: rgba(216, 201, 173, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+                TextInput:
+                    id: email_box
+                    hint_text: "Email"
+                    icon_right: "account"
+                    size_hint: 1, None
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    height: self.minimum_height
+                    background_color: 0, 0, 0, 0
+                    padding: 75
+                    font_name: "fonts/RobotoCondensed-Regular.ttf"
+                    font_size: 18
+                    multiline: False
+                Image:
+                    source: "assets/email.png"
+                    size_hint: None, None
+                    size: 32, 32
+                    pos_hint: {"center_x": .1, "center_y": .5}
+
+            MDFillRoundFlatButton:
+                text: "RESET PASSWORD"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                bold: True
+                md_bg_color: 117 / 255, 93 / 255, 47 / 255, 1
+                size_hint: .85, .08
+                pos_hint: {"center_x": .5, "center_y": .22}
+                on_release: root.reset_pass()
+
+<SignUp>:
+    name: "signup"
+    user: user_box
+    email: email_box
+    password: pass_box
+
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDIconButton:
+                icon: "assets/arrow.png"
+                pos_hint: {"center_y": .93}
+                size_hint: None, None
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: rgba(26, 24, 58, 255)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "start"
+                    root.email.text = ""
+                    root.user.text = ""
+                    root.password.text = ""
+
+            MDLabel:
+                text: "sorsolingo."
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 34
+                halign: "center"
+                pos_hint: {"center_x": .5, "center_y": .85}
+                color: '90691C'
+
+            MDLabel:
+                text: "Sign up on Sorsolingo :)"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 20
+                pos_hint: {"center_x": .5, "center_y": .8}
+                halign: "center"
+                color: '6D5F5F'
+
+            Image:
+                source: "assets/Sorsolingo2.png"
+                pos_hint: {"center_x": .5, "center_y": .6}
+                size_hint: .60, .60
+
+            MDFloatLayout:
+                size_hint: .85, .08
+                pos_hint: {"center_x": .5, "center_y": .4}
+                canvas:
+                    Color:
+                        rgb: rgba(216, 201, 173, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+                TextInput:
+                    hint_text: "Name"
+                    id: user_box
+                    size_hint: 1, None
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    height: self.minimum_height
+                    background_color: 0, 0, 0, 0
+                    padding: 70
+                    font_name: "fonts/RobotoCondensed-Regular.ttf"
+                    font_size: 18
+                    multiline: False
+                Image:
+                    source: "assets/account.png"
+                    size_hint: None, None
+                    size: 32, 32
+                    pos_hint: {"center_x": .1, "center_y": .5}
+
+        MDFloatLayout:
+            size_hint: .85, .08
+            pos_hint: {"center_x": .5, "center_y": .31}
+            canvas:
+                Color:
+                    rgb: rgba(216, 201, 173, 0)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [20]
+            TextInput:
+                hint_text: "Email"
+                id: email_box
+                size_hint: 1, None
+                pos_hint: {"center_x": .5, "center_y": .5}
+                height: self.minimum_height
+                background_color: 0, 0, 0, 0
+                padding: 70
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                multiline: False
+            Image:
+                source: "assets/email.png"
+                size_hint: None, None
+                size: 32, 32
+                pos_hint: {"center_x": .1, "center_y": .5}
+
+        MDFloatLayout:
+            size_hint: .85, .08
+            pos_hint: {"center_x": .5, "center_y": .22}
+            canvas:
+                Color:
+                    rgba: 216/255, 201/255, 173/255, 1
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [20]
+            TextInput:
+                hint_text: "Password"
+                id: pass_box
+                size_hint: 1, None
+                pos_hint: {"center_x": .5, "center_y": .5}
+                height: self.minimum_height
+                background_color: 0, 0, 0, 0
+                padding: 70
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                multiline: False
+                password: True
+            Image:
+                source: "assets/key.png"
+                size_hint: None, None
+                size: 32, 32
+                pos_hint: {"center_x": .1, "center_y": .5}
+            MDIconButton:
+                icon: "eye-off"
+                pos_hint: {"center_y": .5}
+                pos: pass_box.width - self.width + dp(8), 0
+                theme_text_color: "Hint"
+                on_release:
+                    self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                    pass_box.password = False if pass_box.password else True
+
+        MDFillRoundFlatButton:
+            text: "SIGN UP"
+            font_name: "fonts/RubikOne-Regular.ttf"
+            bold: True
+            md_bg_color: 117 / 255, 93 / 255, 47 / 255, 1
+            size_hint: .85, .08
+            pos_hint: {"center_x": .5, "center_y": .13}
+            on_release:
+                root.submit()
+
+<MainWindow>:
+    name: "main"
+
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.4
+                pos_hint: {'top': 1}
+                canvas.before:
+                    Color:
+                        rgb: rgba(231, 209, 168, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+
+            MDLabel:
+                text: "Welcome to,"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 40
+                pos_hint: {"center_x": .5, "center_y": .76}
+                halign: "center"
+                color: 'white'
+
+            Image:
+                source: "assets/Sorsolingo2.png"
+                pos_hint: {"center_x": .5, "center_y": .58}
+                size_hint: .70, .70
+
+            MDLabel:
+                text: "sorsolingo."
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 40
+                halign: "center"
+                pos_hint: {"center_x": .5, "center_y": .38}
+                color: '90691C'
+
+            MDLabel:
+                text: "A Bicol dialect Machine Translator"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 24
+                pos_hint: {"center_x": .5, "center_y": .33}
+                halign: "center"
+                color: '6D5F5F'
+
+            MDFillRoundFlatIconButton:
+                text: "GET STARTED!"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                halign: "center"
+                color: 0, 0, 0, 1
+                bold: True
+                md_bg_color: 144/255, 105/255, 28/255, 1
+                size_hint: .4, .045
+                pos_hint: {"center_x": .5, "center_y": .2}
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "dictionary"
+
+<DictionaryScreen>:
+    name: "dictionary"
+    translate_input: translate_input
+    translate_output: translate_output
+
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            Image:
+                source: "assets/Sorsolingo2.png"
+                size_hint: .4, .05
+                pos_hint: {"center_x": .1, "center_y": .9}
+                background_color: 0, 0, 0, 0
+
+            MDLabel:
+                text: "sorsolingo."
+                font_size: 24
+                halign: "center"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                pos_hint: {"center_x": .35, "center_y": .9}
+                color: '90691C'
+
+            Button:
+                size_hint: .4, .05
+                pos_hint: {'center_x': .85, "center_y": .9}
+                background_color: 0, 0, 0, 0
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "profile"
+                Image:
+                    source: 'assets/girl_icon.png'
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint: .82, .05
+                pos_hint: {"center_x": .5, "center_y": .79}
+                Spinner:
+                    id: spinner_id
+                    text: "Translate from..."
+                    color: 0, 0, 0, 1
+                    values: ["Bisakol", "Tagalog", "English"]
+                    background_normal: ''
+                    background_color: 1, 0.83, 0.58, 1
+                    on_text: root.spinner_clicked(spinner_id.text)
+
+            MDFloatLayout:
+                size_hint: .85, .055
+                pos_hint: {"center_x": .5, "center_y": .7}
+                canvas:
+                    Color:
+                        rgb: rgba(157, 147, 128, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+                TextInput:
+                    id: translate_input
+                    hint_text: "Type here..."
+                    hint_text_color: 0, 0, 0, 1
+                    size_hint: 1, None
+                    pos_hint: {"center_x": .5, "center_y": .49}
+                    height: self.minimum_height
+                    background_color: 0, 0, 0, 0
+                    padding: 40
+                    font_name: "fonts/RobotoCondensed-Regular.ttf"
+                    font_size: 20
+                    multiline: False
+                    on_text_validate: app.root.get_screen('dictionary').save_word()
+                MDIconButton:
+                    icon: "assets/mic.png"
+                    pos_hint: {"center_x": 0.88, "center_y": 0.5}
+                    on_release: root.voice_input()
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint: .82, .05
+                pos_hint: {"center_x": .5, "center_y": .61}
+                Spinner:
+                    id: spinner_id2
+                    text: "Translate to..."
+                    color: 0, 0, 0, 1
+                    values: ["Bisakol", "Tagalog", "English"]
+                    on_text: root.spinner_clicked(spinner_id2.text)
+                    background_normal: ''
+                    background_color: 1, 0.83, 0.58, 1
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 0.85, 0.3
+                pos_hint: {"center_x": .5, "center_y": .38}
+                canvas.before:
+                    Color:
+                        rgb: rgba(231, 209, 168, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [10, 10, 10, 10]
+                TextInput:
+                    id: translate_output
+                    hint_text: "Translation"
+                    hint_text_color: 0, 0, 0, 1
+                    size_hint: 1, None
+                    halign: "left"
+                    pos_hint: {"left_x": .5, "left_y": .51}
+                    height: self.minimum_height
+                    background_color: 0, 0, 0, 0
+                    padding: 40
+                    font_name: "fonts/RobotoCondensed-Regular.ttf"
+                    font_size: 20
+                    multiline: True
+                    readonly: True
+                MDIconButton:
+                    icon: "assets/speaker.png"
+                    pos_hint: {"center_x": 0.9, "center_y": 0.5}
+                    on_release: root.voice_output()
+
+            MDRectangleFlatIconButton:
+                text: "   View Search History"
+                icon: "assets/view.png"
+                font_name: "fonts/Rubik-VariableFont.ttf"
+                halign: "center"
+                size_hint: .82, .05
+                pos_hint: {"center_x": .5, "center_y": .18}
+                md_bg_color: 0.847, 0.788, 0.678, 1
+                text_color: "black"
+                line_color: "white"
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "history"
+
+<HistoryScreen>:
+    name: "history"
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.28
+                pos_hint: {'top': 1}
+                canvas.before:
+                    Color:
+                        rgb: rgba(231, 209, 168, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+            MDIconButton:
+                icon: "assets/arrow.png"
+                pos_hint: {"center_y": .93}
+                size_hint: None, None
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: rgba(26, 24, 58, 255)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "dictionary"
+
+            MDLabel:
+                text: " Search History"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 24
+                pos_hint: {"center_x": .35, "center_y": .93}
+                halign: "center"
+                color: '90691C'
+
+            Image:
+                source: "assets/girl_icon.png"
+                pos_hint: {"center_x": .15, "center_y": .78}
+                size_hint: .25, .25
+
+            MDLabel:
+                text: "Welcome,  "
+                font_name: "fonts/Rubik-Bubbles-Regular.ttf"
+                font_size: 20
+                pos_hint: {"center_x": .4, "center_y": .80}
+                halign: "center"
+                color: 'FFFFFF'
+
+            MDLabel:
+                id: user_name
+                font_name: "fonts/Rubik-VariableFont.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .39, "center_y": .775}
+                halign: "center"
+                color: '000000'
+
+            MDLabel:
+                text: "Bisakol"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 30
+                pos_hint: {"center_x": .5, "center_y": .67}
+                halign: "center"
+                color: '000000'
+                bold: True
+
+            MDLabel:
+                text: "Words"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 30
+                pos_hint: {"center_x": .5, "center_y": .645}
+                halign: "center"
+                color: '000000'
+                bold: True
+
+            MDLabel:
+                text: "Tap 'Clear History' to delete all listed words"
+                font_name: "fonts/Rubik-VariableFont.ttf"
+                font_size: 16
+                pos_hint: {"center_x": .5, "center_y": .6}
+                halign: "center"
+                color: '000000'
+
+            MDScrollView:
+                size_hint: (0.9, 0.4)
+                pos_hint: {"center_x": .5, "center_y": .37}
+                MDList:
+                    id: save_word_lists
+
+            MDRectangleFlatButton:
+                text: "Clear History"
+                halign: "center"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                md_bg_color: 0.847, 0.788, 0.678, 1
+                pos_hint: {"center_x": .5, "center_y": .1}
+                text_color: "black"
+                line_color: "white"
+                on_release: root.clear_history()
+
+
+<Profile>:
+    name: "profile"
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.53
+                pos_hint: {'top': 1}
+                canvas.before:
+                    Color:
+                        rgb: rgba(231, 209, 168, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+
+            MDIconButton:
+                icon: "assets/arrow.png"
+                pos_hint: {"center_y": .93}
+                size_hint: None, None
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: rgba(26, 24, 58, 255)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "dictionary"
+
+            MDLabel:
+                text: " Profile"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 25
+                pos_hint: {"center_x": .3, "center_y": .93}
+                halign: "center"
+                color: '90691C'
+
+            Image:
+                source: "assets/girl_icon.png"
+                pos_hint: {"center_x": .5, "center_y": .7}
+                size_hint: .50, .50
+
+            MDLabel:
+                id: user_name
+                font_name: "fonts/Rubik-VariableFont.ttf"
+                bold: True
+                font_size: 30
+                pos_hint: {"center_x": .5, "center_y": .58}
+                halign: "center"
+                color: '000000'
+
+            MDLabel:
+                text: "Student"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                bold: True
+                font_size: 16
+                pos_hint: {"center_x": .5, "center_y": .54}
+                halign: "center"
+                color: '000000'
+
+            Button:
+                text: "Edit profile"
+                font_name: "fonts/Rowdies-Regular.ttf"
+                color: '000000'
+                bold: True
+                font_size: 25
+                background_color: 0, 0, 0, 0
+                size_hint: .85, .05
+                pos_hint: {"center_x": .5, "center_y": .35}
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "edit_profile"
+                Image:
+                    source: "assets/profile.png"
+                    size: self.parent.height * 0.6, self.parent.height * 0.6
+                    pos: self.parent.x + 35, self.parent.center_y + 2 - self.height / 2
+
+            Button:
+                text: "Help"
+                font_name: "fonts/Rowdies-Regular.ttf"
+                color: '000000'
+                bold: True
+                font_size: 25
+                background_color: 0, 0, 0, 0
+                size_hint: .85, .05
+                pos_hint: {"center_x": .5, "center_y": .30}
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "help"
+                Image:
+                    source: "assets/help.png"
+                    size: self.parent.height * 0.7, self.parent.height * 0.7
+                    pos: self.parent.x + 35, self.parent.center_y + 2 - self.height / 2
+
+            Button:
+                text: "About"
+                font_name: "fonts/Rowdies-Regular.ttf"
+                color: '000000'
+                bold: True
+                font_size: 25
+                background_color: 0, 0, 0, 0
+                size_hint: .85, .05
+                pos_hint: {"center_x": .5, "center_y": .25}
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "about"
+                Image:
+                    source: "assets/about.png"
+                    size: self.parent.height * 0.65, self.parent.height * 0.65
+                    pos: self.parent.x + 35, self.parent.center_y + 2 - self.height / 2
+
+            Button:
+                text: "Log out"
+                font_name: "fonts/Rowdies-Regular.ttf"
+                color: '000000'
+                bold: True
+                font_size: 25
+                background_color: 0, 0, 0, 0
+                size_hint: .85, .05
+                pos_hint: {"center_x": .5, "center_y": .2}
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "logout"
+                Image:
+                    source: "assets/logout.png"
+                    size: self.parent.height * 0.6, self.parent.height * 0.6
+                    pos: self.parent.x + 40, self.parent.center_y + 2 - self.height / 2
+
+<EditProfile>:
+    name: "edit_profile"
+    user: change_name
+    password: change_pass
+
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.53
+                pos_hint: {'top': 1}
+                canvas.before:
+                    Color:
+                        rgb: rgba(231, 209, 168, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+
+            MDIconButton:
+                icon: "assets/arrow.png"
+                pos_hint: {"center_y": .93}
+                size_hint: None, None
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: rgba(26, 24, 58, 255)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "profile"
+
+            MDLabel:
+                text: "Edit Profile"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 25
+                pos_hint: {"center_x": .3, "center_y": .93}
+                halign: "center"
+                color: '90691C'
+
+            Image:
+                source: "assets/girl_icon.png"
+                pos_hint: {"center_x": .5, "center_y": .65}
+                size_hint: .6, .6
+
+            MDLabel:
+                text: "Change your username and password by filling out."
+                font_name: "fonts/Rubik-VariableFont.ttf"
+                font_size: 16
+                pos_hint: {"center_x": .5, "center_y": .4}
+                halign: "center"
+                color: '000000'
+
+            MDTextField:
+                id: change_name
+                hint_text: "Change Name"
+                pos_hint: {"center_x": .5, "center_y": .35}
+                mode: "rectangle"
+                size_hint: (0.8, None)
+                height: "40dp"
+                line_color_normal: 0.458, 0.365, 0.184, 1
+
+            MDTextField:
+                id: change_pass
+                hint_text: "Change Password"
+                pos_hint: {"center_x": .5, "center_y": .25}
+                mode: "rectangle"
+                size_hint: (0.8, None)
+                height: "40dp"
+                line_color_normal: 0.458, 0.365, 0.184, 1
+
+            MDFillRoundFlatIconButton:
+                text: "UPDATE"
+                font_name: "fonts/RubikOne-Regular.ttf"
+                halign: "center"
+                color: 0, 0, 0, 1
+                bold: True
+                md_bg_color: 144/255, 105/255, 28/255, 1
+                size_hint: .8, .045
+                pos_hint: {"center_x": .5, "center_y": .15}
+                on_release: root.change_profile()
+
+
+<About>:
+    name: "about"
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.45
+                pos_hint: {'top': 1}
+                canvas.before:
+                    Color:
+                        rgb: rgba(231, 209, 168, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+            MDIconButton:
+                icon: "assets/arrow.png"
+                pos_hint: {"center_y": .93}
+                size_hint: None, None
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: rgba(26, 24, 58, 255)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "profile"
+
+            Image:
+                source: "assets/about.png"
+                pos_hint: {"center_x": .9, "center_y": .92}
+                size_hint: .09, .09
+
+            Image:
+                source: "assets/Sorsolingo2.png"
+                pos_hint: {"center_x": .5, "center_y": .77}
+                size_hint: .5, .5
+
+            MDLabel:
+                text: "sorsolingo."
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 35
+                pos_hint: {"center_x": .5, "center_y": .63}
+                halign: "center"
+                color: '90691C'
+
+            MDLabel:
+                text: "A Bicol dialect Machine Translator"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .5, "center_y": .59}
+                halign: "center"
+                color: '6D5F5F'
+
+            MDLabel:
+                text: "Description:"
+                bold: True
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 22
+                pos_hint: {"center_x": .2, "center_y": .48}
+                halign: "center"
+                color: '00000'
+
+            MDLabel:
+                text: " Sorsolingo is dedicated to developing an intuitive platform for learning and communication in the Bisakol dialect. Our goal is to enrich cultural understanding and connectivity. The Sorsolingo Translation App goes beyond translation; it's a cultural bridge empowering Bisakol speakers to connect, communicate, and celebrate their linguistic heritage. Through fostering a sense of identity and cultural appreciation within the Bisakol-speaking community, our app strives to ensure the vitality of the Bisakol dialect for generations to come."
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .5, "center_y": .3}
+                halign: "justify"
+                color: 0, 0, 0, 1  # Black color
+                padding: [35, 35]
+
+<Help>:
+    name: "help"
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.45
+                pos_hint: {'top': 1}
+                canvas.before:
+                    Color:
+                        rgb: rgba(231, 209, 168, 0)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20]
+
+            MDIconButton:
+                icon: "assets/arrow.png"
+                pos_hint: {"center_y": .93}
+                size_hint: None, None
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: rgba(26, 24, 58, 255)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "profile"
+
+            Image:
+                source: "assets/help.png"
+                pos_hint: {"center_x": .9, "center_y": .92}
+                size_hint: .09, .09
+
+            Image:
+                source: "assets/Sorsolingo2.png"
+                pos_hint: {"center_x": .5, "center_y": .77}
+                size_hint: .5, .5
+
+            MDLabel:
+                text: "sorsolingo."
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 35
+                pos_hint: {"center_x": .5, "center_y": .63}
+                halign: "center"
+                color: '90691C'
+
+            MDLabel:
+                text: "A Bicol dialect Machine Translator"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .5, "center_y": .59}
+                halign: "center"
+                color: '6D5F5F'
+
+            MDLabel:
+                text: "User's Guide:"
+                bold: True
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 22
+                pos_hint: {"center_x": .22, "center_y": .48}
+                halign: "center"
+                color: '00000'
+
+            MDLabel:
+                text: "Step 1: Search Words"
+                font_name: "fonts/Righteous-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .5, "center_y": .43}
+                halign: "justify"
+                color: 0, 0, 0, 1
+                padding: [35, 35]
+
+            MDLabel:
+                text: "Type or use the mic to search a word."
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .55, "center_y": .4}
+                halign: "justify"
+                color: 0, 0, 0, 1
+                padding: [35, 35]
+
+            MDLabel:
+                text: "Step 2: Translation"
+                font_name: "fonts/Righteous-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .5, "center_y": .35}
+                halign: "justify"
+                color: 0, 0, 0, 1
+                padding: [35, 35]
+
+            MDLabel:
+                text: "Easily translate Bisakol to English/Tagalog or vice versa."
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .55, "center_y": .31}
+                halign: "justify"
+                color: 0, 0, 0, 1
+                padding: [35, 35]
+                multiline: True
+
+            MDLabel:
+                text: "Step 3: History:"
+                font_name: "fonts/Righteous-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .5, "center_y": .26}
+                halign: "justify"
+                color: 0, 0, 0, 1
+                padding: [35, 35]
+
+            MDLabel:
+                text: "Access and manage your search history."
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .55, "center_y": .23}
+                halign: "justify"
+                color: 0, 0, 0, 1
+                padding: [35, 35]
+
+            MDLabel:
+                text: "Step 4: Customize"
+                font_name: "fonts/Righteous-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .5, "center_y": .19}
+                halign: "justify"
+                color: 0, 0, 0, 1
+                padding: [35, 35]
+
+            MDLabel:
+                text: "Click profile to customize, and view Help, and About section."
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 18
+                pos_hint: {"center_x": .55, "center_y": .15}
+                halign: "justify"
+                color: 0, 0, 0, 1
+                padding: [35, 35]
+
+<Logout>:
+    name: "logout"
+    MDScreen:
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 1
+            MDLabel:
+                text: "sorsolingo."
+                font_name: "fonts/RubikOne-Regular.ttf"
+                font_size: 35
+                pos_hint: {"center_x": .5, "center_y": .83}
+                color: '90691C'
+                halign: "center"
+
+            Image:
+                source: "assets/Sorsolingo2.png"
+                pos_hint: {"center_x": .50, "center_y": .65}
+                size_hint: .65, .65
+
+            MDLabel:
+                text: "Oh no! You're Leaving... Are you sure?"
+                font_name: "fonts/RobotoCondensed-Regular.ttf"
+                font_size: 20
+                padding: 50
+                pos_hint: {"center_x": .5, "center_y": .45}
+                halign: "center"
+                color: '6D5F5F'
+
+            MDFillRoundFlatButton
+                text: "Nahh, Just Kidding!"
+                font_name: "fonts/Rowdies-Regular.ttf"
+                bold: True
+                text_color:
+                background_color: 0, 0, 0, 0
+                size_hint: .85, .08
+                md_bg_color: 231 / 255, 209 / 255, 168 / 255, 1
+                pos_hint: {"center_x": .5, "center_y": .33}
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "profile"
+
+            MDFillRoundFlatButton
+                text: "Yes, Log Me Out!"
+                font_name: "fonts/Rowdies-Regular.ttf"
+                bold: True
+                background_color: 0, 0, 0, 0
+                size_hint: .85, .08
+                pos_hint: {"center_x": .5, "center_y": .23}
+                md_bg_color: 117 / 255, 93 / 255, 47 / 255, 1
+                on_release:
+                    app.stop()
