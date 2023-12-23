@@ -8,9 +8,15 @@ from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 from kivy.app import App
 from kivymd.uix.list import OneLineListItem
+from kivy.core.audio import SoundLoader
 
 import sqlite3 as sql
 from transformers import pipeline
+import threading
+import wave
+import pyaudio
+import whisper
+
 Window.size = (360, 740)
 
 
@@ -151,47 +157,126 @@ class DictionaryScreen(Screen):
     translate_input = ObjectProperty()
     translate_output = ObjectProperty()
 
-    def spinner_clicked(self, value):
-        input = self.ids.spinner_id.text
-        if input=="English":
+    def build(self):
+        self.recording = False
+
+    def spinner1_clicked(self, source):
+        if source=="English":
             self.ids.spinner_id2.values = ["Bisakol"]
-        if input=="Bisakol":
+        elif source=="Bisakol":
             self.ids.spinner_id2.values = ["English", "Tagalog"] 
-        if input=="Tagalog":
-            self.ids.spinner_id2.values = ["Bisakol"]                       
+        elif source=="Tagalog":
+            self.ids.spinner_id2.values = ["Bisakol."]  
 
-        if input=="English" and value=="Bisakol":
-            pipe = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-en-bsl")
-            translation = pipe(self.ids.translate_input.text)[0]["generated_text"]
-            self.ids.translate_output.text = f'{translation}'
-        elif input=="Bisakol" and value=="English":
-            pipe = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-bsl-en")
-            translation = pipe(self.ids.translate_input.text)[0]["generated_text"]
-            self.ids.translate_output.text = f'{translation}'
-        elif input=="Tagalog" and value=="Bisakol":
-            pipe = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-tl-bsl")
-            translation = pipe(self.ids.translate_input.text)[0]["generated_text"]
-            self.ids.translate_output.text = f'{translation}'
-        elif input=="Bisakol" and value=="Tagalog":
-            pipe = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-bsl-tl")
-            translation = pipe(self.ids.translate_input.text)[0]["generated_text"]
-            self.ids.translate_output.text = f'{translation}'
+    def spinner2_clicked(self, target):
+        source = self.ids.spinner_id.text                   
 
+        translation = None
+        pipe = None
+
+        if source=="English" and target=="Bisakol":
+            pipe = "dapooni/sorsolingo-mt-en-bsl"
+        elif source=="Bisakol" and target=="English":
+            pipe = "dapooni/sorsolingo-mt-bsl-en"
+        elif source=="Tagalog" and target=="Bisakol.":
+            pipe = "dapooni/sorsolingo-mt-tl-bsl"
+        elif source=="Bisakol" and target=="Tagalog":
+            pipe = "dapooni/sorsolingo-mt-bsl-tl"
+
+        if pipe:
+            translation_pipeline = pipeline("text2text-generation", model=pipe)
+            translation = translation_pipeline(self.ids.translate_input.text)[0]["generated_text"]
+        
+        self.ids.translate_output.text = f'{translation}' if translation is not None else ''
+    
     def voice_input(self):
-        self.ids.mic_on.icon = "assets/mic.png" if self.ids.mic_on.icon == "assets/stop.png" else "assets/stop.png"
-        self.ids.mic_on.pos_hint = {"center_x": 0.98, "center_y": 0.8}
+        self.ids.mic.icon = "assets/mic.png" if self.ids.mic.icon == "assets/stop.png" else "assets/stop.png"
+        self.ids.mic.pos_hint = {"center_x": 0.98, "center_y": 0.8}
+
+        if self.ids.mic.icon == "assets/mic.png":
+            self.recording = False
+            model = whisper.load_model('small')
+            text = model.transcribe('recording.wav')
+            output = text['text']
+            self.ids.translate_input.text = f'{output}'
+            
+        else:
+            self.recording = True
+            self.ids.mic.icon == "assets/stop.png"
+            threading.Thread(target=self.record).start()
+
+
+    def record(self):
+        audio = pyaudio.PyAudio()
+        stream = audio.open(format=pyaudio.paInt16, channels=1, rate=44100,
+                            input=True, frames_per_buffer=1024)
+        frames = []
+
+        while self.recording == True:
+            data = stream.read(1024)
+            frames.append(data)
+        
+        stream.stop_stream()
+        stream.close()
+        audio.terminate()
+        
+        sound_file = wave.open(f"recording.wav", "wb")
+        sound_file.setnchannels(1)
+        sound_file.setsampwidth(audio.get_sample_size(pyaudio.paInt16))
+        sound_file.setframerate(44100)
+        sound_file.writeframes(b"".join(frames))
+        sound_file.close
+
+        # model = whisper.load_model('small')
+        # text = model.transcribe('recording.wav')
+        # output = text['text']
+        # self.ids.translate_input.text = f'voice output here'
 
     def voice_output(self):
-        # Insert Code
-        print("Voice Output: No Function")
+        self.t5_pipeline = pipeline("text-to-speech", model="microsoft/speecht5_tts")
+        # output = self.ids.spinner_id2.text
+        # if output=="English":
+        #     pipe1v = pipeline("text-to-speech", model="facebook/mms-tts-eng")
+        #     translation = pipe1v(self.ids.translate_input.text)[0]["generated_text"]
+        #     self.ids.translate_output.text = f'{translation}'
+        # elif output=="Tagalog":
+        #     pipe2v = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-tl-bsl")
+        #     translation = pipe2v(self.ids.translate_input.text)[0]["generated_text"]
+        #     self.ids.translate_output.text = f'{translation}'
+        # elif output=="Bisakol":
+        #     pipe3v = pipeline("text2text-generation", model="dapooni/sorsolingo-mt-bsl-tl")
+        #     translation = pipe3v(self.ids.translate_input.text)[0]["generated_text"]
+        #     self.ids.translate_output.text = f'{translation}'
+        input_text = self.translate_input.text
+
+        speech_output = self.t5_pipeline(input_text, max_length=150, num_beams=2, length_penalty=2.0)[0]["generated_text"]
+        self.play_audio(speech_output)
+
+    def play_audio(self, audio_text):
+        # Save the synthesized speech to a temporary file (you can improve this part)
+        audio_file_path = "temp_audio.wav"
+        self.t5_pipeline.save_pretrained("t5-small")
+        self.t5_pipeline.save_model("temp_model")
+
+        # Replace this line with your preferred text-to-speech library or service
+        # For simplicity, this example uses pyttsx3 to convert text to speech and plays it using Kivy's SoundLoader
+        import pyttsx3
+        engine = pyttsx3.init()
+        engine.save_to_file(audio_text, audio_file_path)
+        engine.runAndWait()
+
+        # Play the saved audio file using Kivy's SoundLoader
+        sound = SoundLoader.load(audio_file_path)
+        if sound:
+            sound.play()
 
     def save_word(self):
         user = App.get_running_app().get_current_user()
-        word_to_save = self.translate_input.text.strip()
+        word_to_save = self.translate_output.text.strip()
 
         if user and word_to_save:
             user = App.get_running_app().get_current_user()
-            word_to_save = self.translate_input.text.strip()
+            word_to_save = self.translate_output.text.strip()
 
             if user and word_to_save:
                 conn = sql.connect('profiles.db')

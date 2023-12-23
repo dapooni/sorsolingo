@@ -530,7 +530,7 @@ WindowManager:
                     values: ["Bisakol", "Tagalog", "English"]
                     background_normal: ''
                     background_color: 1, 0.83, 0.58, 1
-                    on_text: root.spinner_clicked(spinner_id.text)
+                    on_text: root.spinner1_clicked(spinner_id.text)
 
             MDFloatLayout:
                 size_hint: .85, .055
@@ -556,6 +556,7 @@ WindowManager:
                     multiline: False
                     on_text_validate: app.root.get_screen('dictionary').save_word()
                 MDIconButton:
+                    id: mic
                     icon: "assets/mic.png"
                     pos_hint: {"center_x": 0.88, "center_y": 0.5}
                     on_release: root.voice_input()
@@ -569,7 +570,7 @@ WindowManager:
                     text: "Translate to..."
                     color: 0, 0, 0, 1
                     values: ["Bisakol", "Tagalog", "English"]
-                    on_text: root.spinner_clicked(spinner_id2.text)
+                    on_text: root.spinner2_clicked(spinner_id2.text)
                     background_normal: ''
                     background_color: 1, 0.83, 0.58, 1
 
@@ -590,10 +591,10 @@ WindowManager:
                     hint_text_color: 0, 0, 0, 1
                     size_hint: 1, None
                     halign: "left"
-                    pos_hint: {"left_x": .5, "left_y": .51}
+                    pos_hint: {"left_x": .5, "left_y": .0}
                     height: self.minimum_height
                     background_color: 0, 0, 0, 0
-                    padding: 40
+                    padding: 50
                     font_name: "fonts/RobotoCondensed-Regular.ttf"
                     font_size: 20
                     multiline: True
